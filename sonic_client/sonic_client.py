@@ -1,10 +1,9 @@
 import json
 import pika
-from sonic_client.config import CONF
-from sonic_client.encryption import decrypt
-from sonic_client.manager import Manager
+from config import CONF
+from encryption import decrypt
+from manager import Manager
 
-QUEUE = CONF.get("client", "key")
 
 
 class ActionUnsupportedError(Exception):
@@ -15,9 +14,10 @@ class ActionUnsupportedError(Exception):
 
 
 class SonicClient(object):
+    QUEUE = CONF.name
     def __init__(self, logger):
         self.amqp_channel = _create_amqp_channel()
-        self.amqp_channel.queue_declare(queue=QUEUE)
+        self.amqp_channel.queue_declare(queue=self.QUEUE)
         self.manager = Manager()
         self.logger = logger
 
@@ -36,14 +36,14 @@ class SonicClient(object):
 
     def run(self):
         self.amqp_channel.basic_consume(self._callback,
-                                        queue=QUEUE,
+                                        queue=self.QUEUE,
                                         no_ack=True)
         self.amqp_channel.start_consuming()
 
 
 def _create_amqp_channel():
-    host = CONF.get("amqp", "host")
-    port = CONF.get("amqp", "port")
+    host = CONF.amqp_host
+    port = CONF.amqp_port
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=host,
         port=port))

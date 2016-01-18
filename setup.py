@@ -14,6 +14,6 @@ setup(name='sonic_client',
       packages=find_packages(),
       install_requires=reqs,
       entry_points= {
-          'console_scripts': ['sonic=bin.sonic_client:main'],
+          'console_scripts': ['sonic-client=bin.sonic:main'],
       },
       zip_safe=False)

@@ -1,7 +1,7 @@
 import logging
-from sonic_client.sonic_client import SonicClient
 
 from daemonize import Daemonize
+from sonic_client.sonic_client import SonicClient
 
 pid = "/tmp/sonic.pid"
 logger = logging.getLogger(__name__)
@@ -23,5 +23,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-daemon = Daemonize(app="sonic_client", pid=pid, action=main, keep_fds=keep_fds)
-daemon.start()
