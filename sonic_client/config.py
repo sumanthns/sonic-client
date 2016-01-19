@@ -13,5 +13,7 @@ class Config(object):
         # amqp related parameters
         self.amqp_host = conf.get("amqp", "host")
         self.amqp_port = conf.getint("amqp", "port")
+        self.amqp_username = conf.getint("amqp", "username")
+        self.amqp_password = conf.getint("amqp", "password")
 
 CONF = Config()

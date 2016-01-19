@@ -44,7 +44,9 @@ class SonicClient(object):
 def _create_amqp_channel():
     host = CONF.amqp_host
     port = CONF.amqp_port
-    credentials = pika.PlainCredentials('guest', 'guest')
+    username = CONF.amqp_username
+    password = CONF.amqp_password
+    credentials = pika.PlainCredentials(username, password)
     parameters = pika.ConnectionParameters(host,
                                            port,
                                            '/',
