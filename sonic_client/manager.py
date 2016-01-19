@@ -1,4 +1,4 @@
-from sonic_client.pi_client import PiClient
+from pi_client import PiClient
 
 
 class Manager(object):
