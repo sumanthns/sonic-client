@@ -4,7 +4,8 @@ from config import CONF
 
 def _cipher():
     secret_key = CONF.salt
-    cipher = AES.new(secret_key,AES.MODE_ECB) # never use ECB in strong systems obviously
+    IV = 16 * '\x00'
+    cipher = AES.new(secret_key, AES.MODE_CBC, IV=IV)
     return cipher
 
 def encrypt(msg_text):
