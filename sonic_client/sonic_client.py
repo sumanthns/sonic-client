@@ -24,7 +24,8 @@ class SonicClient(object):
     def _callback(self, ch, method, properties, body):
         self.logger.debug("Processing {}".format(body))
         try:
-            message = json.loads(decrypt(body))
+            #message = json.loads(decrypt(body))
+            message = json.loads(body)
             for key, val in message.iter_items():
                 if hasattr(self.manager, key):
                     getattr(self.manager, key)(val)
