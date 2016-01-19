@@ -26,7 +26,7 @@ class SonicClient(object):
         try:
             #message = json.loads(decrypt(body))
             message = json.loads(body)
-            for key, val in message.iter_items():
+            for key, val in message.iteritems():
                 if hasattr(self.manager, key):
                     getattr(self.manager, key)(val)
                 else:
