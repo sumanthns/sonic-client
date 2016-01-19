@@ -23,13 +23,7 @@ class App():
         self.pidfile_timeout = 5
 
     def run(self):
-        while True:
-            SonicClient(logger).run()
-            logger.debug("Debug message")
-            logger.info("Info message")
-            logger.warn("Warning message")
-            logger.error("Error message")
-            time.sleep(10)
+        SonicClient(logger).run()
 
 app = App()
 
