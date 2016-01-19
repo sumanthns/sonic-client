@@ -2,6 +2,7 @@
 build/
 dist/
 env/
+tmp/
 *.egg-info/
 *.egg
 *.py[cod]
