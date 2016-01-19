@@ -8,7 +8,8 @@ pid = "/var/run/sonic_client/sonic.pid"
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
-fh = logging.FileHandler("/var/log/sonic_client/sonic_client.log", "w")
+log_path = "/var/log/sonic_client/sonic_client.log"
+fh = logging.FileHandler(log_path, "w")
 fh.setLevel(logging.DEBUG)
 logger.addHandler(fh)
 keep_fds = [fh.stream.fileno()]
