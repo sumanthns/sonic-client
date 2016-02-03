@@ -2,6 +2,8 @@
 build/
 dist/
 env/
+venv/
+.env
 tmp/
 *.egg-info/
 *.egg
