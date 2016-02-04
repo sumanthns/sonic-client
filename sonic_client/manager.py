@@ -1,8 +1,8 @@
 import json
 
 from pi_client import PiClient
-from sonic_client.amqp_client import publish_message
-from sonic_client.config import CONF
+from amqp_client import publish_message
+from config import CONF
 
 
 class Manager(object):

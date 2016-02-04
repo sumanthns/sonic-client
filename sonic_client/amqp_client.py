@@ -1,6 +1,6 @@
 import json
 import pika
-from sonic_client.config import CONF
+from config import CONF
 
 
 class AmqpClient():

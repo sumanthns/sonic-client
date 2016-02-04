@@ -1,9 +1,8 @@
 import json
-import pika
+
 from config import CONF
-from encryption import decrypt
 from manager import Manager
-from sonic_client.amqp_client import AmqpClient
+from amqp_client import AmqpClient
 
 
 class ActionUnsupportedError(Exception):
