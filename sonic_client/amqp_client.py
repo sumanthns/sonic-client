@@ -33,7 +33,7 @@ class AmqpClient():
         self.channel.queue_declare(queue=queue)
         self.channel.basic_publish(exchange='',
                                    routing_key=queue,
-                                   body=json.dumps(msg))
+                                   body=msg)
 
 
 def publish_message(queue, message):

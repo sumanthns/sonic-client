@@ -14,8 +14,9 @@ class Manager(object):
         value = opts["output"]
         self.pi_client.output(led, value)
         self.ack_server("update_pin",
-                        led=led,
+                        led="GPIO{}".format(led),
                         output=self.pi_client.input(led),
+                        # output=value,
                         device_uuid=CONF.uuid)
 
     def ack_server(self, method, **kwargs):

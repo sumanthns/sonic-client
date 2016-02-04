@@ -30,7 +30,6 @@ app = App()
 
 
 def main():
-    logger.debug("Starting sonic client")
     daemon_runner = runner.DaemonRunner(app)
     daemon_runner.daemon_context.files_preserve = [fh.stream]
     daemon_runner.daemon_context.initgroups = False

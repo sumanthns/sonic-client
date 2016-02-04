@@ -17,9 +17,6 @@ class SonicClient(object):
 
     def __init__(self, logger):
         self.amqp_client = AmqpClient()
-        self.amqp_client.open_connection()
-        self.amqp_channel = self.amqp_client.channel
-        self.amqp_channel.queue_declare(queue=self.QUEUE)
         self.manager = Manager()
         self.logger = logger
 
@@ -38,8 +35,15 @@ class SonicClient(object):
                               .format(e.message))
 
     def run(self):
-        self.amqp_channel.basic_consume(self._callback,
-                                        queue=self.QUEUE,
-                                        no_ack=True)
-        self.amqp_channel.start_consuming()
+        self.logger.debug("Starting sonic client")
+        try:
+            self.amqp_client.open_connection()
+            self.amqp_client.channel.queue_declare(queue=self.QUEUE)
+            self.amqp_client.channel.basic_consume(self._callback,
+                                                   queue=self.QUEUE,
+                                                   no_ack=True)
+            self.amqp_client.channel.start_consuming()
+        except Exception as e:
+            self.logger.error("Error in connecting to rabbit server - {}"
+                              .format(e.message))
 
