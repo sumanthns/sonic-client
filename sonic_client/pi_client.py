@@ -8,3 +8,6 @@ class PiClient(object):
     def output(self, led, value):
         GPIO.setup(led, GPIO.OUT)
         GPIO.output(led, value)
+
+    def input(self, led):
+        return GPIO.input(led)

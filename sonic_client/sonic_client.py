@@ -5,7 +5,6 @@ from encryption import decrypt
 from manager import Manager
 
 
-
 class ActionUnsupportedError(Exception):
     def __init__(self, action):
         super(Exception, self).__init__("{} action is not"
@@ -14,7 +13,8 @@ class ActionUnsupportedError(Exception):
 
 
 class SonicClient(object):
-    QUEUE = CONF.name
+    QUEUE = CONF.uuid
+
     def __init__(self, logger):
         self.amqp_channel = _create_amqp_channel()
         self.amqp_channel.queue_declare(queue=self.QUEUE)
@@ -24,7 +24,7 @@ class SonicClient(object):
     def _callback(self, ch, method, properties, body):
         self.logger.debug("Processing {}".format(body))
         try:
-            #message = json.loads(decrypt(body))
+            # message = json.loads(decrypt(body))
             message = json.loads(body)
             for key, val in message.iteritems():
                 if hasattr(self.manager, key):
@@ -54,5 +54,3 @@ def _create_amqp_channel():
                                            credentials)
     connection = pika.BlockingConnection(parameters)
     return connection.channel()
-
-
