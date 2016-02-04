@@ -13,18 +13,18 @@ class AmqpClient():
         self.connection_parameters = pika.ConnectionParameters(
             host, port, '/', credentials)
 
-    def _open_connection(self):
+    def open_connection(self):
         self.connection = pika.BlockingConnection(self.connection_parameters)
         self.channel = self.connection.channel()
 
-    def _close_connection(self):
+    def close_connection(self):
         self.connection.close()
 
     def with_open_connection(func):
         def inner(self, *args, **kwargs):
-            self._open_connection()
+            self.open_connection()
             func(self, *args, **kwargs)
-            self._close_connection()
+            self.close_connection()
 
         return inner
 

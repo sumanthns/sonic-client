@@ -3,6 +3,7 @@ import pika
 from config import CONF
 from encryption import decrypt
 from manager import Manager
+from sonic_client.amqp_client import AmqpClient
 
 
 class ActionUnsupportedError(Exception):
@@ -16,7 +17,9 @@ class SonicClient(object):
     QUEUE = CONF.uuid
 
     def __init__(self, logger):
-        self.amqp_channel = _create_amqp_channel()
+        self.amqp_client = AmqpClient()
+        self.amqp_client.open_connection()
+        self.amqp_channel = self.amqp_client.channel
         self.amqp_channel.queue_declare(queue=self.QUEUE)
         self.manager = Manager()
         self.logger = logger
@@ -41,16 +44,3 @@ class SonicClient(object):
                                         no_ack=True)
         self.amqp_channel.start_consuming()
 
-
-def _create_amqp_channel():
-    host = CONF.amqp_host
-    port = CONF.amqp_port
-    username = CONF.amqp_username
-    password = CONF.amqp_password
-    credentials = pika.PlainCredentials(username, password)
-    parameters = pika.ConnectionParameters(host,
-                                           port,
-                                           '/',
-                                           credentials)
-    connection = pika.BlockingConnection(parameters)
-    return connection.channel()
